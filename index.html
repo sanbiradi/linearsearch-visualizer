@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linear Search</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-4">Linear Search Visualizer</h1>
+      <hr />
+      <form action="" class="form m-5">
+        <div class="row">
+          <div class="col">
+            <input
+              type="number"
+              id="number"
+              class="form-control form-control-sm"
+              placeholder="Enter the number to be search"
+            />
+          </div>
+          <div class="col">
+            <button class="btn btn-primary btn-sm" type="submit">Search</button>
+            <button class="btn btn-success btn-sm" type="button" onclick="window.location.reload()">
+              New Search
+            </button>
+          </div>
+          <div class="inputs mt-4"></div>
+        </div>
+
+        <div id="items-list" class="p-5">
+          <!-- <button class="item-1 btn btn-primary pe-5 ps-5" type="button">12</button> -->
+        </div>
+      </form>
+    </div>
+    <script>
+      let inputElement = document.getElementById("number");
+      let form = document.querySelector(".form");
+      let inputs = document.querySelector(".inputs");
+
+      let createHtml = (item) => {
+        let e = document.createElement("button");
+        e.innerHTML = item;
+        e.type = "button";
+        e.setAttribute("data-id", item);
+        e.classList = `item-1 btn btn-primary btn-sm pe-5 ps-5 m-2`;
+        return e;
+      };
+     
+      let inputContainer = document.querySelector(".inputs");
+      let arr = [12, 34, 55, 66, 77, 88, 9, 99, 66, 44, 33, 22, 67];
+      let list = document.getElementById("items-list");
+
+      arr.forEach((num) => {
+        let element = createHtml(num);
+        list.appendChild(element);
+      });
+      let checkingListElement = (number) => {
+        let buttons = document.querySelectorAll(".item-1");
+
+        buttons.forEach((b, i) => {
+          setTimeout(checkElement(b, i), i * 3000);
+        });
+
+        function checkElement(b, i) {
+          let outerTime = 1000 * i;
+          let InnerTime = 1000 * i;
+
+          if (b.dataset["id"] === number) {
+            if (b.classList.contains("btn-primary")) {
+              setTimeout(() => {
+                b.classList.replace("btn-primary", "btn-success");
+              }, InnerTime);
+            }
+
+            if (b.classList.contains("btn-danger")) {
+              setTimeout(() => {
+                b.classList.replace("btn-danger", "btn-success");
+              }, InnerTime);
+            }
+          } else {
+            setTimeout(() => {
+              b.classList.replace("btn-primary", "btn-danger");
+            }, outerTime);
+          }
+        }
+      };
+      form.addEventListener("submit", (e) => {
+        let inputNumber = document.getElementById("number").value;
+        e.preventDefault();
+        if (inputNumber) {
+          inputs.innerHTML = ` ${inputNumber}`;
+          checkingListElement(inputNumber);
+        }
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
